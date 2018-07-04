@@ -12,10 +12,78 @@
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
+  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
-  <clouds/>
+  <clouds>
+    <org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud plugin="kubernetes@1.9.2">
+      <name>kubernetes</name>
+      <defaultsProviderTemplate>blah</defaultsProviderTemplate>
+      <templates>
+        <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+          <inheritFrom></inheritFrom>
+          <name>blah</name>
+          <namespace></namespace>
+          <privileged>false</privileged>
+          <capOnlyOnAlivePods>false</capOnlyOnAlivePods>
+          <alwaysPullImage>false</alwaysPullImage>
+          <instanceCap>2147483647</instanceCap>
+          <slaveConnectTimeout>100</slaveConnectTimeout>
+          <idleMinutes>0</idleMinutes>
+          <activeDeadlineSeconds>0</activeDeadlineSeconds>
+          <label>test</label>
+          <nodeSelector></nodeSelector>
+          <nodeUsageMode>NORMAL</nodeUsageMode>
+          <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
+          <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
+            <memory>false</memory>
+          </workspaceVolume>
+          <volumes/>
+          <containers/>
+          <envVars/>
+          <annotations/>
+          <imagePullSecrets/>
+          <yaml></yaml>
+        </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+      </templates>
+      <serverUrl>https://kubernetes</serverUrl>
+      <serverCertificate>-----BEGIN CERTIFICATE-----
+MIIDkjCCAnqgAwIBAgIBAjANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p
+a3ViZUNBMB4XDTE4MDYyOTA4MjEwOVoXDTE5MDYyOTA4MjEwOVowLDEXMBUGA1UE
+ChMOc3lzdGVtOm1hc3RlcnMxETAPBgNVBAMTCG1pbmlrdWJlMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmFOjn1g/Cv2/SBj6RAY/ve5ekeR7SJ6TmD5k
+mBNcWlaxjnP04j/kFldUx5oXn3zkni9KAr9j1VFjrsJbinud+aPAdbsIBkY4KkuD
+UpJ8/vAnajw46pbis9BzxKRrBOBcFQ/CahlLdWaKLWnMnHK6372sLaTlJcgqnUfw
+lGlJJeKEYWcNCGIDw7PdeAysIMxAwDM7VlfUOHGt3Mf39XlaZypWKejfGophlepw
+InHM/gXScRTc7QPfBY0Ugp5tXpQZ2Jde2cdzOQdQZeZnEEEoG3YUtcmItdePwcnf
+XYUKrZ4oT/nZ9+FfQlvvbIOJioI/t9P/eX7CPqQG7ygxhXFaPQIDAQABo4HVMIHS
+MA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIw
+DAYDVR0TAQH/BAIwADCBkgYDVR0RBIGKMIGHggptaW5pa3ViZUNBgiRrdWJlcm5l
+dGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWyCFmt1YmVybmV0ZXMuZGVmYXVs
+dC5zdmOCEmt1YmVybmV0ZXMuZGVmYXVsdIIKa3ViZXJuZXRlc4IJbG9jYWxob3N0
+hwTAqGNkhwQKYAABhwQKAAABMA0GCSqGSIb3DQEBCwUAA4IBAQAdkRk+sxN7QTZE
+ph7sNpxDFxdWM0WJeEuS6uevhgfQbbeVdEIlpC81Z1+CWBs9G0kfVPSK0AlWyit3
+5JT8WeYMzQrb7QdZ3jF90Hy/UMi/5A1VmpAT+g8uTTB0PtDQ2pOt8HRnpIOkHjAk
+gihweHLT2JQXatlqC7MlzJTnUDA2KfHGVmUQjYBlxTwkgf1qHlefoiFf8KyHA+61
+5GmqqJmXol1vxp/fMDNjBkax7uR+8p87cO2fNARIF6ZP+/JsG1EiPFhAF+SJerM1
+FHAZFtZH4TkpKT8MstcFV8g3Y3pTSVJAjU+RiYMv/rcoijv0tqZzE4YklUy3NRvF
+Si7tup7d
+-----END CERTIFICATE-----</serverCertificate>
+      <skipTlsVerify>false</skipTlsVerify>
+      <addMasterProxyEnvVars>false</addMasterProxyEnvVars>
+      <capOnlyOnAlivePods>false</capOnlyOnAlivePods>
+      <namespace>default</namespace>
+      <jenkinsUrl>http://jenkins:8080</jenkinsUrl>
+      <credentialsId>eaf6a90e-60c0-4d88-9c37-6c071b32b6ab</credentialsId>
+      <containerCap>10</containerCap>
+      <retentionTimeout>5</retentionTimeout>
+      <connectTimeout>0</connectTimeout>
+      <readTimeout>0</readTimeout>
+      <maxRequestsPerHost>32</maxRequestsPerHost>
+    </org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud>
+  </clouds>
+  <quietPeriod>5</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
   <views>
     <hudson.model.AllView>
@@ -27,7 +95,11 @@
     </hudson.model.AllView>
   </views>
   <primaryView>all</primaryView>
-  <slaveAgentPort>0</slaveAgentPort>
+  <slaveAgentPort>50000</slaveAgentPort>
+  <disabledAgentProtocols>
+    <string>JNLP-connect</string>
+    <string>JNLP2-connect</string>
+  </disabledAgentProtocols>
   <label></label>
   <nodeProperties/>
   <globalNodeProperties/>
