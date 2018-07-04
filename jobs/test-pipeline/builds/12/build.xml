@@ -1,0 +1,197 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.22">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.9">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction plugin="kubernetes@1.9.2">
+      <stack serialization="custom">
+        <unserializable-parents/>
+        <vector>
+          <default>
+            <capacityIncrement>0</capacityIncrement>
+            <elementCount>1</elementCount>
+            <elementData>
+              <string>jenkins-slave-j83qc</string>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </elementData>
+          </default>
+        </vector>
+      </stack>
+    </org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction>
+    <org.csanchez.jenkins.plugins.kubernetes.pipeline.NamespaceAction plugin="kubernetes@1.9.2">
+      <stack serialization="custom">
+        <unserializable-parents/>
+        <vector>
+          <default>
+            <capacityIncrement>0</capacityIncrement>
+            <elementCount>1</elementCount>
+            <elementData>
+              <string>default</string>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </elementData>
+          </default>
+        </vector>
+      </stack>
+    </org.csanchez.jenkins.plugins.kubernetes.pipeline.NamespaceAction>
+    <hudson.plugins.git.util.BuildData plugin="git@3.9.1">
+      <buildsByBranchName>
+        <entry>
+          <string>refs/remotes/origin/master</string>
+          <hudson.plugins.git.util.Build>
+            <marked plugin="git-client@2.7.2">
+              <sha1>251993c4b0458494ac0e8dadcf4ab2c6803cf3ba</sha1>
+              <branches class="list">
+                <hudson.plugins.git.Branch>
+                  <sha1 reference="../../../sha1"/>
+                  <name>refs/remotes/origin/master</name>
+                </hudson.plugins.git.Branch>
+              </branches>
+            </marked>
+            <revision reference="../marked"/>
+            <hudsonBuildNumber>12</hudsonBuildNumber>
+          </hudson.plugins.git.util.Build>
+        </entry>
+      </buildsByBranchName>
+      <lastBuild reference="../buildsByBranchName/entry/hudson.plugins.git.util.Build"/>
+      <remoteUrls>
+        <string>https://github.com/gitdr/demo.git</string>
+      </remoteUrls>
+    </hudson.plugins.git.util.BuildData>
+    <hudson.plugins.git.GitTagAction plugin="git@3.9.1">
+      <tags class="hudson.util.CopyOnWriteMap$Tree">
+        <entry>
+          <string>refs/remotes/origin/master</string>
+          <list/>
+        </entry>
+      </tags>
+      <ws>/home/jenkins/workspace/test-pipeline</ws>
+    </hudson.plugins.git.GitTagAction>
+    <org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState plugin="workflow-scm-step@2.6">
+      <revisionStates>
+        <entry>
+          <string>git https://github.com/gitdr/demo.git</string>
+          <hudson.scm.SCMRevisionState_-None/>
+        </entry>
+      </revisionStates>
+    </org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState>
+  </actions>
+  <queueId>31</queueId>
+  <timestamp>1530619960997</timestamp>
+  <startTime>1530619961014</startTime>
+  <result>FAILURE</result>
+  <duration>60133</duration>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>FAILURE</result>
+    <script>podTemplate(label: &apos;maven&apos;, 
+
+    containers: [
+      containerTemplate(name: &apos;maven&apos;, image: &apos;maven:3.5.4-jdk-8-alpine&apos;, ttyEnabled: true, command: &apos;cat&apos;),
+      containerTemplate(name: &apos;builder&apos;, image: &apos;registry.local.test/builder:0.1.0&apos;, ttyEnabled: true, command: &apos;cat&apos;)
+    ],
+    volumes: [
+        // hostPathVolume(mountPath: &apos;/root/.m2/repository&apos;, hostPath: &apos;/tmp/jenkins/.m2/repository&apos;)
+        hostPathVolume(hostPath: &apos;/var/run/docker.sock&apos;, mountPath: &apos;/var/run/docker.sock&apos;)
+    ]
+) {
+
+  node(&apos;maven&apos;) {
+    stage(&apos;Build a Maven project&apos;) {
+      git &apos;https://github.com/gitdr/demo.git&apos;
+      container(&apos;maven&apos;) {
+          sh &apos;cd hello-world &amp;&amp; mvn clean compile assembly:single&apos;
+      }
+    }
+    
+    stage(&apos;List repo&apos;) {
+      container(&apos;builder&apos;) {
+          sh &apos;cd ci &amp;&amp; docker build -t registry.local.test/hello-world -f hello-world/Dockerfile ../hello-world&apos;
+      }
+    }
+  }
+}</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>957635237</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>14756440</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>6504413959</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>32737031</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>150630301</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>30</iota>
+    <head>1:30</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList">
+    <org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+      <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://github.com/gitdr/demo.git</url>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches class="singleton-list">
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="empty-list"/>
+        <extensions>
+          <hudson.plugins.git.extensions.impl.LocalBranch>
+            <localBranch>master</localBranch>
+          </hudson.plugins.git.extensions.impl.LocalBranch>
+        </extensions>
+      </scm>
+      <node>jenkins-slave-j83qc-h4dts</node>
+      <workspace>/home/jenkins/workspace/test-pipeline</workspace>
+      <changelogFile>/var/jenkins_home/jobs/test-pipeline/builds/12/changelog0.xml</changelogFile>
+      <pollingBaseline class="hudson.scm.SCMRevisionState$None" reference="../../../actions/org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState/revisionStates/entry/hudson.scm.SCMRevisionState_-None"/>
+    </org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+  </checkouts>
+</flow-build>

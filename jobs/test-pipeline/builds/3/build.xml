@@ -1,0 +1,134 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.22">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.9">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction plugin="kubernetes@1.9.2">
+      <stack serialization="custom">
+        <unserializable-parents/>
+        <vector>
+          <default>
+            <capacityIncrement>0</capacityIncrement>
+            <elementCount>1</elementCount>
+            <elementData>
+              <string>jenkins-slave-xdmcq</string>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </elementData>
+          </default>
+        </vector>
+      </stack>
+    </org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction>
+    <org.csanchez.jenkins.plugins.kubernetes.pipeline.NamespaceAction plugin="kubernetes@1.9.2">
+      <stack serialization="custom">
+        <unserializable-parents/>
+        <vector>
+          <default>
+            <capacityIncrement>0</capacityIncrement>
+            <elementCount>1</elementCount>
+            <elementData>
+              <string>default</string>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </elementData>
+          </default>
+        </vector>
+      </stack>
+    </org.csanchez.jenkins.plugins.kubernetes.pipeline.NamespaceAction>
+    <jenkins.model.InterruptedBuildAction>
+      <causes class="com.google.common.collect.ImmutableList">
+        <jenkins.model.CauseOfInterruption_-UserInterruption>
+          <user>anonymous</user>
+        </jenkins.model.CauseOfInterruption_-UserInterruption>
+      </causes>
+    </jenkins.model.InterruptedBuildAction>
+  </actions>
+  <queueId>14</queueId>
+  <timestamp>1530544058506</timestamp>
+  <startTime>1530544058549</startTime>
+  <result>ABORTED</result>
+  <duration>160345</duration>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>ABORTED</result>
+    <script>podTemplate(label: &apos;maven&apos;, 
+
+    containers: [
+      containerTemplate(name: &apos;maven&apos;, image: &apos;maven:3.3.9-jdk-8-alpine&apos;, ttyEnabled: true, command: &apos;cat&apos;)
+    ],
+    volumes: [
+        persistentVolumeClaim(mountPath: &apos;/root/.m2/repository&apos;, claimName: &apos;maven-repo&apos;, readOnly: false)
+    ]
+) {
+
+  node(&apos;maven&apos;) {
+    stage(&apos;Build a Maven project&apos;) {
+      git &apos;https://github.com/jenkinsci/kubernetes-plugin.git&apos;
+      container(&apos;maven&apos;) {
+          sh &apos;mvn -B clean package&apos;
+      }
+    }
+    
+    stage(&apos;List repo&apos;) {
+      container(&apos;maven&apos;) {
+          sh &apos;ls -lR /root/.m2/repository&apos;
+      }
+    }
+  }
+}</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>275840613</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>28278873</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>606174753</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>48453422</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>8108629</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>9</iota>
+    <head>1:9</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

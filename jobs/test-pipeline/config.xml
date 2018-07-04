@@ -1,0 +1,73 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.22">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
+    <script>podTemplate(label: &apos;maven&apos;, 
+
+    containers: [
+      containerTemplate(name: &apos;maven&apos;, image: &apos;maven:3.5.4-jdk-8-alpine&apos;, ttyEnabled: true, command: &apos;cat&apos;),
+      containerTemplate(name: &apos;builder&apos;, image: &apos;registry.local.test/builder:0.2.0&apos;, ttyEnabled: true, command: &apos;cat&apos;)
+    ],
+    volumes: [
+        // hostPathVolume(mountPath: &apos;/root/.m2/repository&apos;, hostPath: &apos;/tmp/jenkins/.m2/repository&apos;)
+        hostPathVolume(hostPath: &apos;/var/run/docker.sock&apos;, mountPath: &apos;/var/run/docker.sock&apos;)
+    ]
+) {
+
+  node(&apos;maven&apos;) {
+    stage(&apos;Checkout and build a Maven project&apos;) {
+      git &apos;https://github.com/gitdr/demo.git&apos;
+      container(&apos;maven&apos;) {
+          sh &apos;cd hello-world &amp;&amp; mvn clean compile assembly:single&apos;
+      }
+    }
+    
+    stage(&apos;Build and push container&apos;) {
+      container(&apos;builder&apos;) {
+          sh &apos;&apos;&apos;
+            cd ci
+            docker build -t registry.local.test/hello-world -f hello-world/Dockerfile ../hello-world
+            docker push registry.local.test/hello-world
+          &apos;&apos;&apos;
+      }
+    }
+    
+    stage(&apos;Deploy assets&apos;) {
+      container(&apos;builder&apos;) {
+          sh &apos;&apos;&apos;
+            cd ci
+            kubectl create -f hello-world/hello-world-deploy.yaml
+            kubectl expose deploy hello-world --port=8080
+            # wait for pod to come up
+            until curl -s --connect-timeout 1 hello-world.default:8080 &amp;&gt;/dev/null; do sleep 1; done
+          &apos;&apos;&apos;
+      }
+    }
+    
+    stage(&apos;Integration testing&apos;) {
+      container(&apos;builder&apos;) {
+          sh &apos;&apos;&apos;
+            curl -v hello-world.default:8080
+          &apos;&apos;&apos;
+      }
+    }
+    
+    stage(&apos;Remove assets&apos;) {
+      container(&apos;builder&apos;) {
+          sh &apos;&apos;&apos;
+            cd ci
+            kubectl delete -f hello-world/hello-world-deploy.yaml
+            kubectl delete svc hello-world
+          &apos;&apos;&apos;
+      }
+    }
+  }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

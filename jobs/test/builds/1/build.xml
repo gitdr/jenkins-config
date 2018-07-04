@@ -1,0 +1,25 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>8</queueId>
+  <timestamp>1530502498593</timestamp>
+  <startTime>1530502498624</startTime>
+  <result>SUCCESS</result>
+  <duration>7735</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn>blah-bzcst</builtOn>
+  <workspace>/home/jenkins/workspace/test</workspace>
+  <hudsonVersion>2.121.1</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>

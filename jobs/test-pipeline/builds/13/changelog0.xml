@@ -1,0 +1,13 @@
+commit 825e5ef38d73715decd8a23ce9f0a00a27569a02
+tree d6ea3ee6988c6864995fb41a63fe5b1951e4690b
+parent 251993c4b0458494ac0e8dadcf4ab2c6803cf3ba
+author Your Name <you@example.com> 2018-07-03 13:15:47 +0100
+committer Your Name <you@example.com> 2018-07-03 13:15:47 +0100
+
+    change dir structure
+
+
+
+:000000 100644 0000000000000000000000000000000000000000 3ad4776b49878145cbf27585bfce94aab274dd43 A	ci/docker-builder/Dockerfile
+:100644 100644 7659e93c82649d03c47197253c5205e46c0ecafa 7659e93c82649d03c47197253c5205e46c0ecafa R100	ci/Dockerfile	ci/hello-world/Dockerfile
+:100644 100644 4e9981d5fbfff4e230f0c5bebf502ff46d71f4c6 4e9981d5fbfff4e230f0c5bebf502ff46d71f4c6 R100	ci/hello-world-deploy.yaml	ci/hello-world/hello-world-deploy.yaml

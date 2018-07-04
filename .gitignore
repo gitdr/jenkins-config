@@ -1,0 +1,6 @@
+plugins
+updates/default.json
+logs/tasks/GerritMissedEventsPlaybackEnabledChecker.log*
+war
+logs/tasks/GerritMissedEventsPlaybackEnabledChecker.log
+jobs/test-pipeline/builds/**/*log

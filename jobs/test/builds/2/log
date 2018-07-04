@@ -1,0 +1,8 @@
+Started by user unknown or anonymous
+Agent [8mha:////4PRRz2xZSK1tpGrfeivyW1OS8daBVutJdsYcCow3/bEuAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyuEgYR/eT83ILSktQi/aScxAxdQ8PcnBwA1hV8o8kAAAA=[0mblah-11mll is provisioned from template Kubernetes Pod Template
+Agent specification [Kubernetes Pod Template] (test): 
+
+Building remotely on [8mha:////4PRRz2xZSK1tpGrfeivyW1OS8daBVutJdsYcCow3/bEuAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyuEgYR/eT83ILSktQi/aScxAxdQ8PcnBwA1hV8o8kAAAA=[0mblah-11mll (test) in workspace /home/jenkins/workspace/test
+[test] $ /bin/sh /tmp/jenkins5044728217336900713.sh
+test
+Finished: SUCCESS
